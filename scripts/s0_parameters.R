@@ -24,6 +24,10 @@ packages <- function(x){
 packages(Hmisc)
 packages(RCurl)
 packages(hexbin)
+
+## Packages to download GFC data
+packages(devtools)
+install_github('yfinegold/gfcanalysis')
 packages(gfcanalysis)
 
 ### Load necessary packages
