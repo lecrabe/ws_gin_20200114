@@ -1,0 +1,26 @@
+####################################################################################################
+################################### PART I: GET GADM DATA
+####################################################################################################
+
+## Get the list of countries from getData: "getData"
+(gadm_list  <- data.frame(getData('ISO3')))
+?getData
+
+## Get GADM data, check object propreties
+aoi         <- getData('GADM',path=gadm_dir , country= countrycode, level=1)
+
+summary(aoi)
+extent(aoi)
+proj4string(aoi)
+
+## Display the SPDF
+plot(aoi)
+
+##  Export the SpatialPolygonDataFrame as a ESRI Shapefile
+aoi@data$OBJECTID <- row(aoi@data)[,1]
+
+writeOGR(aoi,
+         paste0(gadm_dir,"gadm_",countrycode,"_l1.shp"),
+         paste0("gadm_",countrycode,"_l1"),
+         "ESRI Shapefile",
+         overwrite_layer = T)
