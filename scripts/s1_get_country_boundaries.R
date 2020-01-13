@@ -24,3 +24,8 @@ writeOGR(aoi,
          paste0("gadm_",countrycode,"_l1"),
          "ESRI Shapefile",
          overwrite_layer = T)
+
+aoi_name   <- paste0(gadm_dir,"gadm_",countrycode,"_l1")
+aoi_shp    <- paste0(aoi_name,".shp")
+aoi_field <-  "OBJECTID"
+
