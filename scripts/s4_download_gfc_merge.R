@@ -1,5 +1,5 @@
 tiles <- calc_gfc_tiles(aoi)
-
+bb <- extent(aoi)
 proj4string(tiles) <- proj4string(aoi)
 
 tiles <- tiles[aoi,]
