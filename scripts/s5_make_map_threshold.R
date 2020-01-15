@@ -68,12 +68,12 @@ if(!file.exists(paste0(gfc_dir,"gfc_",countrycode,"_",threshold,"_map_clip_pct.t
   ))
   
   #############################################################
-  ### CROP TO FARANAH BOUNDARIES
+  ### CROP TO haute_guinee BOUNDARIES
   system(sprintf("python %s/oft-cutline_crop.py -v %s -i %s -o %s -a %s",
                  scriptdir,
-                 paste0(gadm_dir,"faranah.shp"),
+                 paste0(gadm_dir,"haute_guinee.shp"),
                  paste0(tmp_dir,"tmp_gfc_map_",countrycode,".tif"),
-                 paste0(tmp_dir,"tmp_gfc_map_clip_faranah.tif"),
+                 paste0(tmp_dir,"tmp_gfc_map_clip_haute_guinee.tif"),
                  aoi_field
   ))
   
@@ -82,8 +82,8 @@ if(!file.exists(paste0(gfc_dir,"gfc_",countrycode,"_",threshold,"_map_clip_pct.t
   ###############################################################################
   system(sprintf("gdalwarp -t_srs \"%s\" -overwrite -ot Byte -multi -co COMPRESS=LZW %s %s",
                  proj,
-                 paste0(tmp_dir,"tmp_gfc_map_clip_faranah.tif"),
-                 paste0(tmp_dir,"tmp_gfc_map_clip_faranah_proj.tif")
+                 paste0(tmp_dir,"tmp_gfc_map_clip_haute_guinee.tif"),
+                 paste0(tmp_dir,"tmp_gfc_map_clip_haute_guinee_proj.tif")
   ))
   
   
@@ -92,8 +92,8 @@ if(!file.exists(paste0(gfc_dir,"gfc_",countrycode,"_",threshold,"_map_clip_pct.t
   ################################################################################
   system(sprintf("(echo %s) | oft-addpct.py %s %s",
                  paste0(gfc_dir,"color_table.txt"),
-                 paste0(tmp_dir,"tmp_gfc_map_clip_faranah_proj.tif"),
-                 paste0(tmp_dir,"tmp_gfc_map_clip_faranah_proj_pct.tif")
+                 paste0(tmp_dir,"tmp_gfc_map_clip_haute_guinee_proj.tif"),
+                 paste0(tmp_dir,"tmp_gfc_map_clip_haute_guinee_proj_pct.tif")
   ))
   
   ################################################################################
@@ -101,16 +101,16 @@ if(!file.exists(paste0(gfc_dir,"gfc_",countrycode,"_",threshold,"_map_clip_pct.t
   ################################################################################
   system(sprintf("gdal_translate -ot Byte -co COMPRESS=LZW %s %s",
                  
-                 paste0(tmp_dir,"tmp_gfc_map_clip_faranah_proj_pct.tif"),
-                 paste0(gfc_dir,"gfc_faranah_",threshold,"_map_clip_pct.tif")
+                 paste0(tmp_dir,"tmp_gfc_map_clip_haute_guinee_proj_pct.tif"),
+                 paste0(gfc_dir,"gfc_haute_guinee_",threshold,"_map_clip_pct.tif")
   ))
   
   #############################################################
   ### CREATE A FOREST MASK FOR MSPA ANALYSIS
   system(sprintf("gdal_calc.py -A %s --co COMPRESS=LZW --outfile=%s --calc=\"%s\"",
                  
-                 paste0(gfc_dir,"gfc_faranah_",threshold,"_map_clip_pct.tif"),
-                 paste0(gfc_dir,"mask_mspa_gfc_faranah_",threshold,".tif"),
+                 paste0(gfc_dir,"gfc_haute_guinee_",threshold,"_map_clip_pct.tif"),
+                 paste0(gfc_dir,"mask_mspa_gfc_haute_guinee_",threshold,".tif"),
                  paste0("(A==40)*2+((A>0)*(A<40)+(A>40))*1")
   ))
 }

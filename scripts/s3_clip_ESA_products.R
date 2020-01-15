@@ -44,17 +44,17 @@ system(sprintf("python %s/oft-cutline_crop.py -v %s -i %s -o %s -a %s",
 ### CROP TO FARANAH BOUNDARIES
 system(sprintf("python %s/oft-cutline_crop.py -v %s -i %s -o %s -a %s",
                scriptdir,
-               paste0(gadm_dir,"faranah.shp"),
+               paste0(gadm_dir,"haute_guinee.shp"),
                paste0(esa_dir,"esa.tif"),
-               paste0(esa_dir,"esa_faranah.tif"),
+               paste0(esa_dir,"esa_haute_guinee.tif"),
                "OBJECTID"
 ))
 
 #############################################################
 ### CREATE A FOREST MASK FOR MSPA ANALYSIS
 system(sprintf("gdal_calc.py -A %s --co COMPRESS=LZW --outfile=%s --calc=\"%s\"",
-               paste0(esa_dir,"esa_faranah.tif"),
-               paste0(esa_dir,"esa_faranah_mspa.tif"),
+               paste0(esa_dir,"esa_haute_guinee.tif"),
+               paste0(esa_dir,"esa_haute_guinee_mspa.tif"),
                paste0("(A==0)*0+(A==1)*2+(A>1)*1")
 ))
 
